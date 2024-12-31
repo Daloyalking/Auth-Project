@@ -13,7 +13,15 @@ ConnectDB();
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: "*", credentials: true }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://grand-brigadeiros-4a3caf.netlify.app",
+    ],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 
 // API Endpoint
