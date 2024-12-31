@@ -12,10 +12,7 @@ const Port = process.env.PORT || 4000;
 ConnectDB();
 
 // Middleware
-const allowedOrigins = [
-  "http://localhost:5173", // Local development
-  "https://grand-brigadeiros-4a3caf.netlify.app", // Deployed frontend
-];
+const allowedOrigins = ["https://grand-brigadeiros-4a3caf.netlify.app"];
 
 app.use(express.json());
 app.use(
