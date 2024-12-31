@@ -12,7 +12,7 @@ const AuthContextProvider = ({ children }) => {
 
   axios.defaults.withCredentials = true;
 
-  const backendurl = "http://localhost:4000";
+  const backendurl = "https://miniauth-zeta.vercel.app/";
   const navigate = useNavigate();
 
   const getUserAuth = async () => {
