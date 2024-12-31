@@ -12,12 +12,17 @@ const AuthContextProvider = ({ children }) => {
 
   axios.defaults.withCredentials = true;
 
+  const normalizeUrl = (baseUrl, path) => {
+    return `${baseUrl.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
+  };
+
   const backendurl = "https://miniauth-zeta.vercel.app";
   const navigate = useNavigate();
 
   const getUserAuth = async () => {
     try {
-      const { data } = await axios.post(backendurl + "/api/auth/is-auth");
+      const url = normalizeUrl(backendurl, "/api/auth/is-auth");
+      const { data } = await axios.post(url);
       if (data.success) {
         setIsLoggedIn(true);
         fetchUserData();
