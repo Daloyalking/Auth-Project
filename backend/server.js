@@ -14,19 +14,21 @@ ConnectDB();
 // Middleware
 const allowedOrigins = ["https://grand-brigadeiros-4a3caf.netlify.app"];
 
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
+
 app.use(express.json());
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true); // Allow the request
-      } else {
-        callback(new Error("Not allowed by CORS")); // Block the request
-      }
-    },
-    credentials: true, // Required for cookies and other credentials
-  })
-);
+app.use(cors(corsOptions));
 app.use(cookieParser());
 
 // API Endpoint
