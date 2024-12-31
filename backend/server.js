@@ -12,23 +12,25 @@ const Port = process.env.PORT || 4000;
 ConnectDB();
 
 // Middleware
-const allowedOrigins = ["https://grand-brigadeiros-4a3caf.netlify.app"];
+const allowedOrigins = [
+  "http://localhost:5173", // Local frontend
+  "https://grand-brigadeiros-4a3caf.netlify.app", // Netlify frontend
+];
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};
-
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Required for cookies
+  })
+);
 app.use(express.json());
-app.use(cors(corsOptions));
+
 app.use(cookieParser());
 
 // API Endpoint
@@ -37,6 +39,12 @@ app.get("/", (req, res) => {
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoute);
+
+
+app.use((req, res, next) => {
+  console.log("CORS request from origin:", req.headers.origin);
+  next();
+});
 
 app.listen(Port, (req, res) => {
   console.log(`Server started successfully on port ${Port}`);
