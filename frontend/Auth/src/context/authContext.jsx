@@ -10,12 +10,13 @@ const AuthContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  axios.defaults.withCredentials = true;
-
   const backendurl = "https://miniauth-zeta.vercel.app";
   const navigate = useNavigate();
 
+  axios.defaults.withCredentials = true;
+
   const getUserAuth = async () => {
+    
     try {
       const { data } = await axios.post(`${backendurl}/api/auth/is-auth`);
       if (data.success) {

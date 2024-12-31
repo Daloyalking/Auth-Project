@@ -8,15 +8,20 @@ import { AuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { setIsLoggedIn, backendurl,loading, setLoading, navigate, fetchUserData } =
-    useContext(AuthContext);
+  const {
+    setIsLoggedIn,
+    backendurl,
+    loading,
+    setLoading,
+    navigate,
+    fetchUserData,
+  } = useContext(AuthContext);
   const [loginState, setLoginState] = useState("login");
   const [loginData, setLoginData] = useState({
     name: "",
     email: "",
     password: "",
   });
-
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
