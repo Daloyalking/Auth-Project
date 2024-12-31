@@ -16,7 +16,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", // Local development frontend
-      "https://grand-brigadeiros-4a3caf.netlify.app", // Production frontend
+      "https://grand-brigadeiros-4a3caf.netlify.app", 
+      "https://auth-project-mu-two.vercel.app"
     ],
     credentials: true, // Allow cookies to be sent
   })
