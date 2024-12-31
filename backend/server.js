@@ -12,14 +12,22 @@ const Port = process.env.PORT || 4000;
 ConnectDB();
 
 // Middleware
+const allowedOrigins = [
+  "http://localhost:5173", // Local development
+  "https://grand-brigadeiros-4a3caf.netlify.app", // Deployed frontend
+];
+
 app.use(express.json());
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://grand-brigadeiros-4a3caf.netlify.app",
-    ],
-    credentials: true,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true); // Allow the request
+      } else {
+        callback(new Error("Not allowed by CORS")); // Block the request
+      }
+    },
+    credentials: true, // Required for cookies and other credentials
   })
 );
 app.use(cookieParser());
